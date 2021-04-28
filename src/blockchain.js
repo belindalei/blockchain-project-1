@@ -125,7 +125,8 @@ class Blockchain {
                 let verifiedMessage = bitcoinMessage.verify(message, address, signature)
                 if(verifiedMessage){
                     let newBlock = new BlockClass.Block({owner: address, star: star});
-                    resolve(self._addBlock(newBlock))
+                    await self._addBlock(newBlock)
+                    resolve(newBlock)
                 } else {
                     reject("Message is not verified")
                 }
@@ -145,7 +146,12 @@ class Blockchain {
     getBlockByHash(hash) {
         let self = this;
         return new Promise((resolve, reject) => {
-           
+           let block = self.chain.filter(block => block.hash === hash)[0]
+           if(block){
+               resolve(block);
+           } else {
+               reject("ERR: Could not find block by hash"); 
+           }
         });
     }
 
@@ -176,7 +182,16 @@ class Blockchain {
         let self = this;
         let stars = [];
         return new Promise((resolve, reject) => {
-            
+            self.chain.forEach( async block => {
+                let data = block.getBData();
+                if(data){
+                    if(data.owner === address){
+                        stars.push(data)
+                    }
+                }
+
+            })
+            resolve(stars)
         });
     }
 
@@ -190,7 +205,12 @@ class Blockchain {
         let self = this;
         let errorLog = [];
         return new Promise(async (resolve, reject) => {
-            
+            self.chain.forEach(async(block) => {
+                if(block.height === 0){
+                    await block.validate() ? true : errorLog.push("Genesis Block not validated")
+                }
+                
+            })
         });
     }
 

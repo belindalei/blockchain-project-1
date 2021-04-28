@@ -1,5 +1,10 @@
 {
-  "address": "tb1qag49yvw9zpgtvyqz4u7q93hecmzyglq05zu7k0",
-  "message": "tb1qag49yvw9zpgtvyqz4u7q93hecmzyglq05zu7k0:1619540097:starRegistry",
-  "signature": 
+  "address": "1HZwkjkeaoZfTSaJxDw6aKkxp45agDiEzN",
+  "message": "1HZwkjkeaoZfTSaJxDw6aKkxp45agDiEzN:1619568757:starRegistry",
+  "signature": "1HZwkjkeaoZfTSaJxDw6aKkxp45agDiEzNHFRssWK1ymE7T3+tRgiImzXWwrBm83t4PqykuK2JaTpU3ckuAjihaWyLOykYYgyf18RD4PLUre4sUTPcDn7/NVE=",
+  "star": {
+      "dec": "68° 52' 56.9",
+      "ra": "16h 29m 1.0s",
+      "story": "Testing the story 4"
+  }
 }
