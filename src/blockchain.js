@@ -25,9 +25,7 @@ class Blockchain {
     constructor() {
         this.chain = [];
         this.height = -1;
-        this.previousHash = '0x';
         this.initializeChain();
-        this.timeStamp = '';
     }
 
     /**
@@ -38,7 +36,7 @@ class Blockchain {
     async initializeChain() {
         if( this.height === -1){
             let block = new BlockClass.Block({data: 'Genesis Block'});
-            await this._addBlock(block);
+            this._addBlock(block);
         }
     }
 
@@ -66,22 +64,18 @@ class Blockchain {
     _addBlock(block) {
         let self = this;
         return new Promise(async (resolve, reject) => {
-            let height = await self.getChainHeight();
+            console.log("BLOCK", block)
+            block.height = self.chain.length;
             block.timeStamp = new Date().getTime().toString().slice(0,-3);
-            if(height>0){
+            if(self.chain.length>0){
                 block.previousHash = self.chain[this.chain.length-1].hash;
+            } else {
+                block.previousHash = 0; 
             }
             block.hash = SHA256(JSON.stringify(block)).toString();
             self.chain.push(block);
-            if(self.hash[self.chain.length-1] = block){
-                resolve(block)
-            } else {
-                block.height = height +1; 
-                block.hash = SHA256(JSON.stringify(BlockObj)).toString();
-                self.chain.push(block);
-                self.height = self.chain.length - 1;
-                resolve(block) 
-            }
+            self.height += 1 
+            resolve(block)
         });
     }
 
@@ -124,7 +118,7 @@ class Blockchain {
             if(currentTime - time < 300){
                 let verifiedMessage = bitcoinMessage.verify(message, address, signature)
                 if(verifiedMessage){
-                    let newBlock = new BlockClass.Block({owner: address, star: star});
+                    let newBlock = new BlockClass.Block({"owner": address, "star": star});
                     await self._addBlock(newBlock)
                     resolve(newBlock)
                 } else {

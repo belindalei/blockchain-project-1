@@ -44,6 +44,7 @@ class BlockchainController {
                 const address = req.body.address;
                 const message = await this.blockchain.requestMessageOwnershipVerification(address);
                 if(message){
+                    console.log("MESSAGE", message)
                     return res.status(200).json(message);
                 } else {
                     return res.status(500).send("An error happened!");

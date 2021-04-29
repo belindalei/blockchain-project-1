@@ -1,10 +1,10 @@
 {
   "address": "1HZwkjkeaoZfTSaJxDw6aKkxp45agDiEzN",
-  "message": "1HZwkjkeaoZfTSaJxDw6aKkxp45agDiEzN:1619568757:starRegistry",
-  "signature": "1HZwkjkeaoZfTSaJxDw6aKkxp45agDiEzNHFRssWK1ymE7T3+tRgiImzXWwrBm83t4PqykuK2JaTpU3ckuAjihaWyLOykYYgyf18RD4PLUre4sUTPcDn7/NVE=",
+  "message": "1HZwkjkeaoZfTSaJxDw6aKkxp45agDiEzN:1619575234:starRegistry",
+  "signature": "1HZwkjkeaoZfTSaJxDw6aKkxp45agDiEzNG3JHKmg7mJ+PyCk2/Op2svqMXMD99pLZUDKb7LlXe0I7g6ZLMaCaOMNFKEy8qKS49ZZ9EsBMmqHIrH2iPaFwEfM=",
   "star": {
       "dec": "68° 52' 56.9",
       "ra": "16h 29m 1.0s",
-      "story": "Testing the story 4"
+      "story": "Magic"
   }
 }
