@@ -65,16 +65,15 @@ class Block {
     getBData() {
         // Getting the encoded data saved in the Block
         let self = this
-        let encodedData = self.body
-        // Decoding the data to retrieve the JSON representation of the object
-        let decodedData = hex2ascii(encodedData)
-        // Parse the data to an object to be retrieve.
-        let parsedData = JSON.parse(decodedData)
+        
         return new Promise((resolve,reject) => {
-            if(self.previousBlockHash !== null){
-                resolve(parsedData)
-            } else{
-                reject()
+            let encodedData = self.body
+            // Decoding the data to retrieve the JSON representation of the object
+            let decodedData = hex2ascii(encodedData)
+            // Parse the data to an object to be retrieve.
+            let parsedData = JSON.parse(decodedData)
+            if (parsedData && this.height > 0){
+                resolve(parsedData);
             }
         })
     }
