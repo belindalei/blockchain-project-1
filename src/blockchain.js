@@ -64,17 +64,17 @@ class Blockchain {
     _addBlock(block) {
         let self = this;
         return new Promise(async (resolve, reject) => {
-            console.log("BLOCK", block)
             block.height = self.chain.length;
-            block.timeStamp = new Date().getTime().toString().slice(0,-3);
+            block.time = new Date().getTime().toString().slice(0,-3);
             if(self.chain.length>0){
-                block.previousHash = self.chain[this.chain.length-1].hash;
+                block.previousBlockHash = self.chain[this.chain.length-1].hash;
             } else {
-                block.previousHash = 0; 
+                block.previousBlockHash = 0; 
             }
             block.hash = SHA256(JSON.stringify(block)).toString();
             self.chain.push(block);
             self.height += 1 
+            console.log("SELF.CHAIN", self.chain)
             resolve(block)
         });
     }
@@ -116,9 +116,9 @@ class Blockchain {
             let time = parseInt(message.split(':')[1])
             let currentTime = parseInt(new Date().getTime().toString().slice(0, -3));
             if(currentTime - time < 300){
-                let verifiedMessage = bitcoinMessage.verify(message, address, signature)
-                if(verifiedMessage){
-                    let newBlock = new BlockClass.Block({"owner": address, "star": star});
+                if(bitcoinMessage.verify(message, address, signature)){
+                    console.log("NEW BLOCK", newBlock)
+                    let newBlock = new BlockClass.Block({owner: address, star: star});
                     await self._addBlock(newBlock)
                     resolve(newBlock)
                 } else {
@@ -138,6 +138,7 @@ class Blockchain {
      * @param {*} hash 
      */
     getBlockByHash(hash) {
+        console.log("HASH", hash)
         let self = this;
         return new Promise((resolve, reject) => {
            let block = self.chain.filter(block => block.hash === hash)[0]
@@ -202,9 +203,11 @@ class Blockchain {
             self.chain.forEach(async(block) => {
                 if(block.height === 0){
                     await block.validate() ? true : errorLog.push("Genesis Block not validated")
+                } else if(block.previousBlockHash === self.chain[block.height-1].hash){
+                    await block.validate() ? true : errorLog.push("Block not validated")
                 }
-                
             })
+            resolve(errorLog)
         });
     }
 
