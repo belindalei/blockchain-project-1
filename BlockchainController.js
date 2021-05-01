@@ -17,6 +17,7 @@ class BlockchainController {
         this.submitStar();
         this.getBlockByHash();
         this.getStarsByOwner();
+        this.validateChain();
     }
 
     // Enpoint to Get a Block by Height (GET Endpoint)
@@ -119,15 +120,15 @@ class BlockchainController {
         });
     }
 
-    //code for this endpoint found at https://knowledge.udacity.com/questions/238367
-    validateBlockchain() { this.app.get("/validateblkchain", async (req, res) =>
+    //endpoint to trigger the execution of validateChain
+    validateChain() { this.app.get("/validate", async (req, res) =>
     {  
         let errorList = await this.blockchain.validateChain();
          if(errorList.length > 0) 
             { 
                 return res.status(500).json(errorList); 
             } 
-        else { return res.status(202).send("chain validation successful"); 
+        else { return res.status(200).send("chain validation successful"); 
         }
      }); 
     }
