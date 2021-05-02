@@ -72,10 +72,11 @@ class Blockchain {
                 block.previousBlockHash = 0; 
             }
             block.hash = SHA256(JSON.stringify(block)).toString();
-            self.chain.push(block);
-            self.height += 1 
-            console.log("SELF.CHAIN", self.chain)
-            resolve(block)
+            if(await self.validateChain()){  //added validateChain to verify for every block addition
+                self.chain.push(block);
+                self.height += 1 
+                resolve(block)
+            }
         });
     }
 
